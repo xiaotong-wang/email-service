@@ -34,7 +34,7 @@ public class EmailQuartz {
                     }
                     // 文本邮件
                     if (MailType.MAIL_WITH_CONTENT.equals(mailDTO.getMailType())) {
-                        mailService.sendEmailWithContentMethod(mailDTO);
+//                        mailService.sendEmailWithContentMethod(mail, mailDTO);
                     }
                     // 发送成功，次数+1，并修改状态
                     mailDTO.setSendNum(mailDTO.getSendNum() + 1);

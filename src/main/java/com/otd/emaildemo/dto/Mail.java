@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 import lombok.experimental.Accessors;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Map;
 
@@ -24,6 +25,7 @@ public class Mail {
     /**
      * 收件人
      */
+
     private String to;
     /**
      * 主题
@@ -40,5 +42,9 @@ public class Mail {
     /**
      * 模板内容
      */
-    private Map<String, String> modelContent;
+    private String modelContent;
+    /**
+     * 附件
+     */
+    private MultipartFile[] attachment;
 }

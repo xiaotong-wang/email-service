@@ -9,7 +9,7 @@ import org.springframework.scheduling.annotation.EnableScheduling;
  * @author xiaotong.wang
  */
 @EnableAsync
-@EnableScheduling
+//@EnableScheduling
 @SpringBootApplication
 public class EmailDemoApplication {
 

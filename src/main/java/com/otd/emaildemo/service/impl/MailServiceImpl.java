@@ -11,10 +11,12 @@ import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.freemarker.FreeMarkerTemplateUtils;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer;
 
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -65,6 +67,12 @@ public class MailServiceImpl implements MailService {
         Template template = freeMarkerConfigurer.getConfiguration().getTemplate(mailDTO.getModelName()+".ftl");
         // 模板填充
         String text = FreeMarkerTemplateUtils.processTemplateIntoString(template,mailDTO.getModelContent());
+        // 添加附件
+        if (null != mailDTO.getAttachmentUrl()){
+            for (String s : mailDTO.getAttachmentUrl()) {
+                mimeMessageHelper.addAttachment(s.substring(s.indexOf("-")+1), new File(s));
+            }
+        }
         mimeMessageHelper.setText(text,true);
         // 邮件发送
         javaMailSender.send(mimeMessage);
@@ -77,6 +85,7 @@ public class MailServiceImpl implements MailService {
             sendEmailWithContentMethod(mailDTO);
             mailDTO.setSendNum(1).setSendStatus(MailStatus.SUCCESS);
         } catch (Exception e) {
+            System.out.println(e);
             mailDTO.setSendNum(1).setSendStatus(MailStatus.FAIL).setErrorMsg(e.getMessage());
         }
         mailDTOList.add(mailDTO);
@@ -93,6 +102,12 @@ public class MailServiceImpl implements MailService {
         mimeMessageHelper.setTo(mailDTO.getTo());
         // 邮件内容
         mimeMessageHelper.setText(mailDTO.getContent());
+        // 添加附件
+        if (null != mailDTO.getAttachmentUrl()){
+            for (String s : mailDTO.getAttachmentUrl()) {
+                mimeMessageHelper.addAttachment(s.substring(s.indexOf("-")+1), new File(s));
+            }
+        }
         // 邮件发送
         javaMailSender.send(mimeMessage);
     }

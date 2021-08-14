@@ -5,7 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 import lombok.experimental.Accessors;
-
+import org.springframework.web.multipart.MultipartFile;
 import java.util.Map;
 
 /**
@@ -21,6 +21,10 @@ import java.util.Map;
 @AllArgsConstructor
 public class MailDTO {
     /**
+     * 邮件编号
+     */
+    private String mailNo;
+    /**
      * 收件人
      */
     private String[] to;
@@ -29,7 +33,7 @@ public class MailDTO {
      */
     private String subject;
     /**
-     * 邮件类型
+     * 邮件类型 1文本邮件 2模板邮件
      */
     private Integer mailType;
     /**
@@ -56,4 +60,12 @@ public class MailDTO {
      * 发送状态 0未推送 1推送成功 2推送失败 -1失败不再发送
      */
     private String errorMsg;
+    /**
+     * 附件 0没有 1有
+     */
+    private Integer hasAttachment;
+    /**
+     * 附件地址
+     */
+    private String[] attachmentUrl;
 }
